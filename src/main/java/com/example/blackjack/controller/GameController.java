@@ -48,8 +48,11 @@ public class GameController {
     
     @PostMapping("/hit")
     public String hit(Model model) {
-        if(playerTurn && !deck.isEmpty()) {
+        if(playerTurn && !deck.isEmpty() && player.getScore() <= 21) {
             player.addCard(deck.drawCard());
+        }
+        if(player.getScore() > 21) {
+            stand(model);
         }
         return redirect;
     }
@@ -58,7 +61,7 @@ public class GameController {
     public String stand(Model model) {
         playerTurn = false;
 
-        while(!deck.isEmpty()) {
+        while(!deck.isEmpty() && dealer.getScore() < 17) {
             dealer.addCard(deck.drawCard());
         }
         
