@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Card Deck</title>
+    <title>Card Game</title>
 </head>
 <body>
-    <h1 th:text="${message}">Welcome</h1>
+    <h1>Card Game: Player vs Dealer</h1>
 
-    <div th:if="${!deckOver}">
-        <form method="post" action="/draw">
-            <button type="submit">Draw Card</button>
+    <h2>Player's Hand:</h2>
+    <ul>
+        <li th:each="card : ${playerHand}" th:text="${card}"></li>
+    </ul>
+
+    <h2>Dealer's Hand:</h2>
+    <ul>
+        <li th:each="card : ${dealerHand}" th:text="${card}"></li>
+    </ul>
+
+    <div th:if="${playerTurn}">
+        <form method="post" action="/hit">
+            <button type="submit">Hit</button>
+        </form>
+
+        <form method="post" action="/stand">
+            <button type="submit">Stand</button>
         </form>
     </div>
 
-    <div>
-        <ul>
-            <li th:each="card : ${cards}" th:text="${card}"></li>
-        </ul>
-    </div>
-
-    
-
-    <div th:if="${deckOver}">
+    <div th:if="${gameOver}">
+        <p><strong>Game Over!</strong></p>
         <form method="post" action="/restart">
-            <button type="submit">Restart Deck</button>
+            <button type="submit">Restart</button>
         </form>
+    </div>
+
+    <div th:if="${deckOver && !gameOver}">
+        <p><strong>Deck Over!</strong></p>
     </div>
 </body>
 </html>
