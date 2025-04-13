@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Card Deck</title>
+</head>
+<body>
+    <h1 th:text="${message}">Welcome</h1>
+
+    <div th:if="${!deckOver}">
+        <form method="post" action="/draw">
+            <button type="submit">Draw Card</button>
+        </form>
+    </div>
+
+    <div>
+        <ul>
+            <li th:each="card : ${cards}" th:text="${card}"></li>
+        </ul>
+    </div>
+
+    
+
+    <div th:if="${deckOver}">
+        <form method="post" action="/restart">
+            <button type="submit">Restart Deck</button>
+        </form>
+    </div>
+</body>
+</html>
