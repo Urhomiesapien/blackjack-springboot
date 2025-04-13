@@ -21,4 +21,28 @@ public class User {
     public void resetHand() {
         hand.clear();
     }
+
+    public int getScore() {
+        int score = 0;
+
+        for(String card: hand) {
+            char rank = card.charAt(0);
+            switch(rank) {
+                case 'T':
+                case 'J':
+                case 'K':
+                case 'Q':
+                    score += 10;
+                    break;
+                case 'A':
+                    score += 11;
+                    break;
+                default:
+                    score += Character.getNumericValue(rank);
+                    break;
+            }
+        }
+
+        return score;
+    }
 }

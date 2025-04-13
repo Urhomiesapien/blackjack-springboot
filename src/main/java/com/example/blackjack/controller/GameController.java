@@ -40,6 +40,8 @@ public class GameController {
         model.addAttribute("playerTurn", playerTurn);
         model.addAttribute("gameOver", gameOver);
         model.addAttribute("deckOver", deck.isEmpty());
+        model.addAttribute("playerScore", player.getScore());
+        model.addAttribute("dealerScore", dealer.getScore());
 
         return "index";
     }

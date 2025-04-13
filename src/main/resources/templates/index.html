@@ -6,16 +6,6 @@
 <body>
     <h1>Card Game: Player vs Dealer</h1>
 
-    <h2>Player's Hand:</h2>
-    <ul>
-        <li th:each="card : ${playerHand}" th:text="${card}"></li>
-    </ul>
-
-    <h2>Dealer's Hand:</h2>
-    <ul>
-        <li th:each="card : ${dealerHand}" th:text="${card}"></li>
-    </ul>
-
     <div th:if="${playerTurn}">
         <form method="post" action="/hit">
             <button type="submit">Hit</button>
@@ -25,6 +15,17 @@
             <button type="submit">Stand</button>
         </form>
     </div>
+
+    <h2>Player's Hand (Score: <span th:text="${playerScore}"></span>):</h2>
+    <ul>
+        <li th:each="card : ${playerHand}" th:text="${card}"></li>
+    </ul>
+
+
+    <h2>Dealer's Hand (Score: <span th:text="${dealerScore}"></span>):</h2>
+    <ul>
+        <li th:each="card : ${dealerHand}" th:text="${card}"></li>
+    </ul>
 
     <div th:if="${gameOver}">
         <p><strong>Game Over!</strong></p>
