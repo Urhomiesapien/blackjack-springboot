@@ -28,6 +28,7 @@
     </ul>
 
     <div th:if="${gameOver}">
+        <h2 th:if="${result != ''}" th:text="${result}"></h2>
         <p><strong>Game Over!</strong></p>
         <form method="post" action="/restart">
             <button type="submit">Restart</button>

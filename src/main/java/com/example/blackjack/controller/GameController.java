@@ -4,18 +4,10 @@ import com.example.blackjack.model.Deck;
 import com.example.blackjack.model.Player;
 import com.example.blackjack.model.Dealer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class GameController {
@@ -25,9 +17,29 @@ public class GameController {
     private Dealer dealer = new Dealer();
     private boolean playerTurn = true;
     private boolean gameOver = false;
-    private String redirect = "redirect:/";
+    private String redirect = "redirect:/game";
+    private String result = "";
 
     @GetMapping("/")
+    public String menu() {
+        return "menu";
+    }
+
+    @GetMapping("/play")
+    public String play(Model model) {
+        deck = new Deck();
+        player.resetHand();
+        dealer.resetHand();
+        result = "";
+
+        player.addCard(deck.drawCard());
+        player.addCard(deck.drawCard());
+        dealer.addCard(deck.drawCard());
+
+        return "redirect:/game";
+    }
+
+    @GetMapping("/game")
     public String home(Model model) {
         if(player.getHand().isEmpty() && dealer.getHand().isEmpty()) {
             player.addCard(deck.drawCard());
@@ -42,6 +54,7 @@ public class GameController {
         model.addAttribute("deckOver", deck.isEmpty());
         model.addAttribute("playerScore", player.getScore());
         model.addAttribute("dealerScore", dealer.getScore());
+        model.addAttribute("result", result);
 
         return "index";
     }
@@ -66,6 +79,28 @@ public class GameController {
         }
         
         gameOver = true;
+
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+
+        if (playerScore > 21) {
+            result = "Player busted! Dealer wins.";
+        } else if (playerScore == 21) {
+            if (dealerScore == 21) {
+                result = "It's a draw! Both have Blackjack!";
+            } else {
+                result = "Blackjack! Player wins!";
+            }
+        } else if (dealerScore > 21) {
+            result = "Dealer busted! Player wins!";
+        } else if (playerScore > dealerScore) {
+            result = "Player wins with " + playerScore + " against dealer's " + dealerScore + ".";
+        } else if (playerScore < dealerScore) {
+            result = "Dealer wins with " + dealerScore + " against player's " + playerScore + ".";
+        } else {
+            result = "It's a draw!";
+        }
+
         return redirect;
     }
     

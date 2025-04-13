@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blackjack Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            background-color: #2e2e2e;
+            color: #fff;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin-top: 30px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blackjack</h1>
+    <form action="/play" method="get">
+        <button type="submit" class="button">Play</button>
+    </form>
+</body>
+</html>
