@@ -58,7 +58,15 @@ public class GameController {
 
         return "index";
     }
-    
+    @GetMapping("/gameover")
+    public String gameOverPage(Model model) {
+    model.addAttribute("result", result);
+    model.addAttribute("playerScore", player.getScore());
+    model.addAttribute("dealerScore", dealer.getScore());
+    model.addAttribute("playerHand", player.getHand());
+    model.addAttribute("dealerHand", dealer.getHand());
+    return "gameover";
+    }
     @PostMapping("/hit")
     public String hit(Model model) {
         if(playerTurn && !deck.isEmpty() && player.getScore() <= 21) {
@@ -101,7 +109,7 @@ public class GameController {
             result = "It's a draw!";
         }
 
-        return redirect;
+        return "redirect:/gameover";
     }
     
     @PostMapping("/restart")
@@ -115,5 +123,6 @@ public class GameController {
         return redirect;
     }
     
+
     
 }

@@ -1,0 +1,32 @@
+body.menu-bg {
+  background-image: url('/bgimage.png');
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* adds spacing between title/play/exit */
+}
+
+.title-img {
+  width: 60%; /* or whatever fits nicely */
+  max-width: 500px;
+}
+
+.btn-img {
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-img:hover {
+  transform: scale(1.05);
+}
