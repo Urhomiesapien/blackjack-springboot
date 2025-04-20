@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Blackjack</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
   <style>
     @font-face {
       font-family: 'Determination';
-      src: url('/resources/fonts/DTM-Mono.otf') format('opentype');
+      src: url('/fonts/DTM-Mono.otf') format('opentype');
     }
 
     body {
       margin: 0;
-      background-image: url('/resources/static/bgimage.png');
+      background-image: url('/bgimage.png');
       background-repeat: repeat;
       font-family: 'Determination', sans-serif;
     }
-
+    
     .section {
       display: flex;
       justify-content: center;
@@ -27,8 +26,8 @@
       text-align: center;
       font-size: 28px;
       margin-bottom: 20px;
-      color: white;
-      text-shadow: 2px 2px #000;
+      color: rgb(0, 0, 0);
+      text-shadow: 2px 2px 0px #ff6a6a;
     }
 
     .hand {
@@ -41,7 +40,7 @@
     .card {
       width: 90px;
       height: 130px;
-      background: url('/resources/static/cardtemplate.png') no-repeat center/cover;
+      background: url('/cardtemplate.png') no-repeat center/cover;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -54,6 +53,9 @@
     }
 
     .card .value {
+      font-size: 40px;
+      text-shadow: 1px 1px  rgb(13, 13, 13);
+      color: rgb(58, 137, 255);
       margin-top: 10px;
     }
 
@@ -87,7 +89,7 @@
       color: yellow;
       font-size: 26px;
       margin-top: 40px;
-      text-shadow: 2px 2px black;
+      text-shadow: 2px 2px 5px black;
     }
   </style>
 </head>
@@ -99,7 +101,7 @@
       <div class="hand">
         <div class="card" th:each="card : ${dealerHand}">
           <span class="value" th:text="${#strings.substring(card, 0, card.length() - 1)}"></span>
-          <img class="suit" th:src="@{'/resources/static/suit-' + ${#strings.toLowerCase(card.substring(card.length() - 1))} + '.png'}" alt="suit">
+          <img class="suit" th:src="@{'/suit-' + ${#strings.toLowerCase(card.substring(card.length() - 1))} + '.png'}" alt="suit">
         </div>
       </div>
     </div>
@@ -111,7 +113,7 @@
       <div class="hand">
         <div class="card" th:each="card : ${playerHand}">
           <span class="value" th:text="${#strings.substring(card, 0, card.length() - 1)}"></span>
-          <img class="suit" th:src="@{'/resources/static/suit-' + ${#strings.toLowerCase(card.substring(card.length() - 1))} + '.png'}" alt="suit">
+          <img class="suit" th:src="@{'/suit-' + ${#strings.toLowerCase(card.substring(card.length() - 1))} + '.png'}" alt="suit">
         </div>
       </div>
     </div>
@@ -120,12 +122,12 @@
   <div class="controls" th:if="${playerTurn}">
     <form method="post" action="/hit">
       <button style="all: unset;">
-        <img src="/resources/static/hitbut.png" alt="Hit">
+        <img src="/hitbut.png" alt="Hit">
       </button>
     </form>
     <form method="post" action="/stand">
       <button style="all: unset;">
-        <img src="/resources/static/standbut.png" alt="Stand">
+        <img src="/standbut.png" alt="Stand">
       </button>
     </form>
   </div>
@@ -133,8 +135,8 @@
   <div class="result" th:if="${gameOver}">
     <p th:text="${result}"></p>
     <form method="post" action="/restart">
-      <button style="all: unset;">
-        <img src="/resources/static/playag.png" alt="Play Again">
+      <button class="controls" style="all: unset; size: 15px;">
+        <img src="/playag.png" alt="Play Again">
       </button>
     </form>
   </div>

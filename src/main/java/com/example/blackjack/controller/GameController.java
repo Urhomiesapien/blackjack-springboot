@@ -27,17 +27,20 @@ public class GameController {
 
     @GetMapping("/play")
     public String play(Model model) {
-        deck = new Deck();
-        player.resetHand();
-        dealer.resetHand();
-        result = "";
+    deck = new Deck();
+    player.resetHand();
+    dealer.resetHand();
+    result = "";
+    playerTurn = true;
+    gameOver = false;
 
-        player.addCard(deck.drawCard());
-        player.addCard(deck.drawCard());
-        dealer.addCard(deck.drawCard());
+    player.addCard(deck.drawCard());
+    player.addCard(deck.drawCard());
+    dealer.addCard(deck.drawCard());
 
-        return "redirect:/game";
-    }
+    return "redirect:/game";
+}
+
 
     @GetMapping("/game")
     public String home(Model model) {
@@ -56,7 +59,7 @@ public class GameController {
         model.addAttribute("dealerScore", dealer.getScore());
         model.addAttribute("result", result);
 
-        return "index";
+        return "game";
     }
     @GetMapping("/gameover")
     public String gameOverPage(Model model) {
@@ -90,8 +93,10 @@ public class GameController {
 
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
+        boolean gamestatus = true; 
 
         if (playerScore > 21) {
+            gamestatus = false;
             result = "Player busted! Dealer wins.";
         } else if (playerScore == 21) {
             if (dealerScore == 21) {
@@ -104,12 +109,16 @@ public class GameController {
         } else if (playerScore > dealerScore) {
             result = "Player wins with " + playerScore + " against dealer's " + dealerScore + ".";
         } else if (playerScore < dealerScore) {
+            gamestatus = false;
             result = "Dealer wins with " + dealerScore + " against player's " + playerScore + ".";
         } else {
             result = "It's a draw!";
         }
-
-        return "redirect:/gameover";
+        if (gamestatus) {
+            return "redirect:/game";
+        } else {
+            return "redirect:/gameover";        }
+        
     }
     
     @PostMapping("/restart")
